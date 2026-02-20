@@ -31,7 +31,7 @@
         .cert-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 80%; margin: 20px auto; text-align: left; background: rgba(241, 245, 249, 0.5); padding: 20px; border-radius: 15px; border: 1px solid #e2e8f0; }
         .detail-item { font-size: 14px; font-weight: 600; color: #475569; }
         .detail-item span { color: #0f172a; font-weight: 800; }
-        .cert-trademark { width: 100px; height: 100px; border: 3px double #d4af37; border-radius: 50%; display: flex; align-items: center; text-align: center; font-size: 10px; font-weight: 900; color: #d4af37; padding: 10px; position: absolute; bottom: 60px; left: 100px; transform: rotate(-15deg); }
+        .cert-trademark-seal { width: 120px; height: 120px; position: absolute; bottom: 60px; left: 100px; transform: rotate(-10deg); filter: sepia(1) saturate(5) hue-rotate(10deg); opacity: 0.8; }
         .cert-signature { position: absolute; bottom: 60px; right: 100px; text-align: center; }
         .sign-font { font-family: 'Dancing Script', cursive; font-size: 32px; color: #064e3b; border-bottom: 1px solid #1e293b; padding: 0 20px; }
         
@@ -43,9 +43,15 @@
 
     <!-- Navbar -->
     <nav class="sticky top-0 z-50 glass-nav px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-2 cursor-pointer" onclick="showSection('home')">
-            <div class="bg-emerald-600 p-2 rounded-2xl shadow-lg"><i data-lucide="shield-check" class="text-white w-5 h-5"></i></div>
-            <span class="text-xl font-black tracking-tighter">BSKF<span class="text-emerald-600">.</span></span>
+        <div class="flex items-center gap-4 cursor-pointer" onclick="showSection('home')">
+            <!-- লোগো সাইজ বাড়িয়ে w-16 করা হয়েছে এবং ফ্রেমের সাথে ম্যাচ করা হয়েছে -->
+            <div class="relative w-16 h-16 rounded-full border-4 border-emerald-500 overflow-hidden shadow-xl bg-white">
+                <img src="https://i.ibb.co.com/sJkNZHQL/IMG-20260220-072042.jpg" alt="BSKF Logo" class="w-full h-full object-cover">
+            </div>
+            <div class="flex flex-col">
+                <span class="text-xl font-black tracking-tighter text-slate-900 leading-none">BSKF</span>
+                <span class="text-xs font-bold text-emerald-600 italic">Foundation.</span>
+            </div>
         </div>
         <div class="relative">
             <button id="profileBtn" class="bg-white border p-2 rounded-2xl shadow-sm hover:ring-2 ring-emerald-500 transition-all">
@@ -69,8 +75,8 @@
         <!-- Home Section -->
         <section id="home">
             <header class="text-center py-10 space-y-3">
-                <h1 class="text-5xl md:text-7xl font-black tracking-tighter italic uppercase text-slate-900">BSKF <span class="text-emerald-600">CORP</span></h1>
-                <p class="text-slate-500 font-medium text-lg">কুপতলা আলোকিত সমাজ ফাউন্ডেশন - মানবতার কল্যাণে।</p>
+                <h1 class="text-5xl md:text-7xl font-black tracking-tighter italic uppercase text-slate-900">BSKF <span class="text-emerald-600">FOUNDATION</span></h1>
+                <p class="text-slate-500 font-medium text-lg">বন্ধুমহল সমাজ কল্যাণ ফাউন্ডেশন - মানবতার কল্যাণে।</p>
             </header>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -173,9 +179,8 @@
                     <div class="cert-watermark">BSKF</div>
                     <div class="cert-content">
                         <div class="flex justify-center mb-4">
-                            <div class="bg-emerald-700 p-4 rounded-full border-4 border-yellow-500 shadow-xl">
-                                <i data-lucide="shield-check" class="text-white w-12 h-12"></i>
-                            </div>
+                            <!-- সার্টিফিকেটের লোগো সাইজ ও ফিক্স -->
+                            <img src="https://i.ibb.co.com/sJkNZHQL/IMG-20260220-072042.jpg" crossorigin="anonymous" alt="Logo" class="w-40 h-40 rounded-full border-4 border-yellow-500 shadow-2xl object-cover">
                         </div>
                         <h1 style="font-size: 50px; color: #064e3b; font-weight: 900; letter-spacing: -1px;">BSKF FOUNDATION</h1>
                         <p style="font-size: 16px; font-weight: 700; color: #b45309; letter-spacing: 5px; margin-bottom: 30px; text-transform: uppercase;">Certificate of Official Membership</p>
@@ -199,10 +204,8 @@
                         </p>
                     </div>
 
-                    <!-- Trademark -->
-                    <div class="cert-trademark">
-                        OFFICIAL<br>BSKF SEAL<br>ORIGINAL
-                    </div>
+                    <!-- Seal with Logo -->
+                    <img src="https://i.ibb.co.com/sJkNZHQL/IMG-20260220-072042.jpg" crossorigin="anonymous" class="cert-trademark-seal rounded-full object-cover">
 
                     <!-- Admin Signature -->
                     <div class="cert-signature">
@@ -288,6 +291,7 @@
         });
 
         function updateDashboardUI() {
+            if(!activeUser) return;
             document.getElementById('dashName').innerText = activeUser.name;
             document.getElementById('dashID').innerText = 'ID: BSKF-' + activeUser.id;
             
@@ -325,7 +329,7 @@
             });
 
             db.collection("members").where("status", "==", "active").onSnapshot(snap => {
-                document.getElementById('statMembers').innerText = snap.size + ' জন';
+                document.getElementById('statMembers').innerText = snap.size.toLocaleString('bn-BD') + ' জন';
                 const ticker = document.getElementById('ticker'); ticker.innerHTML = "";
                 snap.forEach(m => ticker.innerHTML += `<span>★ ${m.data().name} (${m.data().role || 'সদস্য'})</span>`);
             });
@@ -351,13 +355,22 @@
             const btn = document.getElementById('downloadBtn'); btn.innerText = 'Generating Certificate...';
             const template = document.getElementById('certificateTemplate');
             
-            html2canvas(template, { scale: 2, useCORS: true }).then(canvas => {
+            html2canvas(template, { 
+                scale: 2, 
+                useCORS: true, 
+                allowTaint: false,
+                backgroundColor: "#ffffff"
+            }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `BSKF_Certificate_${activeUser.name}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
                 btn.innerHTML = '<i data-lucide="award"></i> Get Membership Certificate';
                 lucide.createIcons();
+            }).catch(err => {
+                console.error("Canvas error:", err);
+                alert("সার্টিফিকেট তৈরিতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+                btn.innerHTML = '<i data-lucide="award"></i> Get Membership Certificate';
             });
         }
 
@@ -366,7 +379,7 @@
             const phone = document.getElementById('regPhone').value;
             const trx = document.getElementById('regTrx').value;
             try {
-                await auth.createUserWithEmailAndPassword(phone + "@bskf.com", document.getElementById('regPass').value);
+                await auth.createUserWithEmailAndPassword(phone + "@bksf.com", document.getElementById('regPass').value);
                 const memberInfo = { 
                     name: document.getElementById('regName').value, 
                     fatherName: document.getElementById('regFather').value,
@@ -391,7 +404,7 @@
 
         document.getElementById('loginForm').onsubmit = async (e) => {
             e.preventDefault();
-            try { await auth.signInWithEmailAndPassword(document.getElementById('logPhone').value + "@bskf.com", document.getElementById('logPass').value); showSection('dashboard'); }
+            try { await auth.signInWithEmailAndPassword(document.getElementById('logPhone').value + "@bksf.com", document.getElementById('logPass').value); showSection('dashboard'); }
             catch (err) { alert("ভুল তথ্য অথবা একাউন্ট নেই!"); }
         };
 
