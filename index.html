@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BSKF - কুপতলা আলোকিত সমাজ ফাউন্ডেশন</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&family=Playfair+Display:wght@700;900&family=Montserrat:wght@400;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -20,10 +21,19 @@
         .section-hide { display: none; }
         .btn-premium { background: linear-gradient(135deg, #059669, #047857); color: white; box-shadow: 0 10px 20px rgba(5, 150, 105, 0.2); }
         
-        #certificateTemplate { width: 1200px; height: 850px; padding: 0; background: #fff; position: fixed; left: -9999px; font-family: 'Montserrat', sans-serif; overflow: hidden; color: #1a2e35; }
+        /* Certificate Styles */
+        #certificateTemplate { width: 1200px; height: 850px; background: #fff; position: fixed; left: -9999px; font-family: 'Montserrat', sans-serif; color: #1a2e35; }
         .cert-outer-border { height: 100%; width: 100%; background: #064e3b; padding: 25px; position: relative; }
-        .cert-inner-border { height: 100%; width: 100%; background: #fff; border: 4px solid #d4af37; position: relative; display: flex; flex-direction: column; align-items: center; padding: 60px; background-image: radial-gradient(#d4af37 0.5px, transparent 0.5px); background-size: 20px 20px; }
-        .cert-member-name { font-family: 'Playfair Display', serif; font-size: 55px; font-weight: 900; border-bottom: 2px solid #d4af37; padding-bottom: 10px; margin: 20px 0; }
+        .cert-inner-border { height: 100%; width: 100%; background: #fff; border: 4px solid #d4af37; position: relative; display: flex; flex-direction: column; align-items: center; padding: 40px; background-image: radial-gradient(#d4af37 0.3px, transparent 0.3px); background-size: 15px 15px; }
+        .cert-watermark { position: absolute; font-size: 150px; color: rgba(212, 175, 55, 0.05); font-weight: 900; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg); pointer-events: none; z-index: 0; }
+        .cert-content { position: relative; z-index: 1; width: 100%; text-align: center; }
+        .cert-member-name { font-family: 'Playfair Display', serif; font-size: 50px; font-weight: 900; color: #064e3b; margin: 10px 0; border-bottom: 2px solid #d4af37; display: inline-block; padding: 0 30px; }
+        .cert-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 80%; margin: 20px auto; text-align: left; background: rgba(241, 245, 249, 0.5); padding: 20px; border-radius: 15px; border: 1px solid #e2e8f0; }
+        .detail-item { font-size: 14px; font-weight: 600; color: #475569; }
+        .detail-item span { color: #0f172a; font-weight: 800; }
+        .cert-trademark { width: 100px; height: 100px; border: 3px double #d4af37; border-radius: 50%; display: flex; align-items: center; text-align: center; font-size: 10px; font-weight: 900; color: #d4af37; padding: 10px; position: absolute; bottom: 60px; left: 100px; transform: rotate(-15deg); }
+        .cert-signature { position: absolute; bottom: 60px; right: 100px; text-align: center; }
+        .sign-font { font-family: 'Dancing Script', cursive; font-size: 32px; color: #064e3b; border-bottom: 1px solid #1e293b; padding: 0 20px; }
         
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         .animate-marquee { animation: marquee 25s linear infinite; }
@@ -64,15 +74,15 @@
             </header>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div class="premium-card p-8 border-b-4 border-emerald-500">
+                <div class="premium-card p-8 border-b-4 border-emerald-500 text-center">
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Fund</p>
                     <h3 id="statFund" class="text-3xl font-black text-emerald-700">৳ ০</h3>
                 </div>
-                <div class="premium-card p-8 border-b-4 border-rose-500">
+                <div class="premium-card p-8 border-b-4 border-rose-500 text-center">
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Expense</p>
                     <h3 id="statExpense" class="text-3xl font-black text-rose-700">৳ ০</h3>
                 </div>
-                <div class="premium-card p-8 border-b-4 border-blue-500">
+                <div class="premium-card p-8 border-b-4 border-blue-500 text-center">
                     <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Active Members</p>
                     <h3 id="statMembers" class="text-3xl font-black text-blue-700">০ জন</h3>
                 </div>
@@ -89,15 +99,27 @@
         </section>
 
         <!-- Register Section -->
-        <section id="register" class="section-hide max-w-xl mx-auto">
-            <div class="premium-card p-10">
-                <h2 class="text-2xl font-black mb-1 text-center italic">সদস্য আবেদন</h2>
-                <p class="text-center text-rose-500 text-xs font-bold mb-8">নিবন্ধন ফি ২০০ টাকা প্রযোজ্য</p>
+        <section id="register" class="section-hide max-w-2xl mx-auto">
+            <div class="premium-card p-8 md:p-12">
+                <h2 class="text-3xl font-black mb-2 text-center italic">সদস্য আবেদন ফরম</h2>
+                <p class="text-center text-rose-500 text-xs font-bold mb-8 uppercase tracking-widest">Registration Fee: 200 BDT</p>
+                
                 <form id="regForm" class="space-y-4">
-                    <input type="text" id="regName" placeholder="পুরো নাম" class="w-full p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
-                    <input type="text" id="regPhone" placeholder="মোবাইল নম্বর" class="w-full p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
-                    <input type="text" id="regNID" placeholder="এনআইডি নম্বর" class="w-full p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
-                    <input type="password" id="regPass" placeholder="পাসওয়ার্ড" class="w-full p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input type="text" id="regName" placeholder="আপনার পূর্ণ নাম" class="p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
+                        <input type="text" id="regFather" placeholder="পিতার নাম" class="p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
+                        <input type="text" id="regMother" placeholder="মাতার নাম" class="p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
+                        <input type="text" id="regNID" placeholder="এনআইডি নম্বর" class="p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
+                        <input type="text" id="regPhone" placeholder="মোবাইল নম্বর" class="p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
+                        <input type="password" id="regPass" placeholder="পাসওয়ার্ড তৈরি করুন" class="p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <input type="text" id="regVillage" placeholder="গ্রাম" class="p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
+                        <input type="text" id="regThana" placeholder="থানা" class="p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
+                        <input type="text" id="regDistrict" placeholder="জেলা" class="p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
+                        <input type="number" id="regWard" placeholder="ওয়ার্ড নং" class="p-4 bg-slate-50 rounded-2xl border outline-none font-bold" required>
+                    </div>
                     
                     <div class="bg-emerald-50 p-6 rounded-[2rem] border-2 border-dashed border-emerald-200 space-y-4">
                         <div class="pay-numbers flex flex-wrap justify-center gap-4 text-[10px] font-black text-emerald-800 uppercase italic"></div>
@@ -105,11 +127,11 @@
                             <select id="regMethod" class="p-4 bg-white rounded-xl border font-bold text-sm" required>
                                 <option value="">Method</option><option value="Bkash">Bkash</option><option value="Nagad">Nagad</option>
                             </select>
-                            <input type="text" id="regSender" placeholder="Sender No" class="p-4 bg-white rounded-xl border font-bold text-sm" required>
+                            <input type="text" id="regSender" placeholder="Sender Number" class="p-4 bg-white rounded-xl border font-bold text-sm" required>
                         </div>
                         <input type="text" id="regTrx" placeholder="Transaction ID (TrxID)" class="w-full p-4 bg-white rounded-xl border-2 border-emerald-400 font-black text-center uppercase tracking-widest" required>
                     </div>
-                    <button type="submit" class="w-full btn-premium py-5 rounded-2xl font-black text-lg uppercase">Apply Now</button>
+                    <button type="submit" class="w-full btn-premium py-5 rounded-2xl font-black text-lg uppercase">Apply for Membership</button>
                 </form>
             </div>
         </section>
@@ -119,17 +141,17 @@
             <div id="pendingStatus" class="hidden bg-amber-50 border-2 border-dashed border-amber-200 p-10 rounded-[3rem] text-center">
                 <i data-lucide="loader" class="w-12 h-12 text-amber-500 mx-auto mb-4 animate-spin"></i>
                 <h3 class="text-xl font-black text-amber-700">আবেদনটি যাচাই করা হচ্ছে...</h3>
-                <p class="text-xs font-bold text-slate-500 mt-2">এডমিন আপনার পেমেন্ট নিশ্চিত করলে আইডি সক্রিয় হবে।</p>
+                <p class="text-xs font-bold text-slate-500 mt-2">অ্যাডমিন আপনার পেমেন্ট নিশ্চিত করলে আইডি সক্রিয় হবে।</p>
             </div>
 
             <div id="activeDashboard" class="hidden space-y-10">
                 <div class="premium-card p-12 text-center relative overflow-hidden bg-white border-t-8 border-emerald-600">
-                    <div class="bg-emerald-600 text-white absolute top-6 right-[-35px] px-12 py-1 rotate-45 text-[10px] font-black shadow-lg uppercase">Verified</div>
+                    <div class="bg-emerald-600 text-white absolute top-6 right-[-35px] px-12 py-1 rotate-45 text-[10px] font-black shadow-lg uppercase">Official Member</div>
                     <h4 id="dashName" class="text-4xl font-black text-slate-900 mb-1 italic uppercase tracking-tighter">...</h4>
                     <p id="dashID" class="text-[11px] text-slate-400 font-black tracking-[0.4em] uppercase mb-10">BSKF-0000</p>
                     
                     <button onclick="downloadCertificate()" id="downloadBtn" class="bg-slate-900 text-white px-10 py-4 rounded-full font-black text-[12px] uppercase tracking-widest flex items-center gap-3 mx-auto shadow-2xl hover:bg-emerald-600 transition-all active:scale-95">
-                        <i data-lucide="award" class="w-5 h-5"></i> Get High-Quality Certificate
+                        <i data-lucide="award" class="w-5 h-5"></i> Get Membership Certificate
                     </button>
                 </div>
 
@@ -144,13 +166,70 @@
             </div>
         </section>
 
-        <!-- Payment Section (Monthly Dues) -->
+        <!-- Ultra Premium Certificate Template -->
+        <div id="certificateTemplate">
+            <div class="cert-outer-border">
+                <div class="cert-inner-border">
+                    <div class="cert-watermark">BSKF</div>
+                    <div class="cert-content">
+                        <div class="flex justify-center mb-4">
+                            <div class="bg-emerald-700 p-4 rounded-full border-4 border-yellow-500 shadow-xl">
+                                <i data-lucide="shield-check" class="text-white w-12 h-12"></i>
+                            </div>
+                        </div>
+                        <h1 style="font-size: 50px; color: #064e3b; font-weight: 900; letter-spacing: -1px;">BSKF FOUNDATION</h1>
+                        <p style="font-size: 16px; font-weight: 700; color: #b45309; letter-spacing: 5px; margin-bottom: 30px; text-transform: uppercase;">Certificate of Official Membership</p>
+                        
+                        <p style="font-size: 18px; color: #64748b; font-style: italic;">This is to certify that</p>
+                        <div class="cert-member-name" id="certName">MEMBER NAME</div>
+                        
+                        <div class="cert-details-grid">
+                            <div class="detail-item">Father's Name: <span id="certFather">...</span></div>
+                            <div class="detail-item">Mother's Name: <span id="certMother">...</span></div>
+                            <div class="detail-item">NID Number: <span id="certNID">...</span></div>
+                            <div class="detail-item">Ward No: <span id="certWard">...</span></div>
+                            <div class="detail-item">Village: <span id="certVillage">...</span></div>
+                            <div class="detail-item">Thana: <span id="certThana">...</span></div>
+                            <div class="detail-item">District: <span id="certDistrict">...</span></div>
+                            <div class="detail-item">Member ID: <span id="certID">BSKF-0000</span></div>
+                        </div>
+
+                        <p style="width: 70%; margin: 20px auto; font-size: 14px; line-height: 1.6; font-weight: 500; color: #475569;">
+                            Is a registered and verified member of Kuptola Alokito Somaj Foundation (BSKF). We acknowledge their commitment towards humanity and social welfare.
+                        </p>
+                    </div>
+
+                    <!-- Trademark -->
+                    <div class="cert-trademark">
+                        OFFICIAL<br>BSKF SEAL<br>ORIGINAL
+                    </div>
+
+                    <!-- Admin Signature -->
+                    <div class="cert-signature">
+                        <div class="sign-font">Alphas</div>
+                        <p style="font-size: 12px; font-weight: 900; margin-top: 5px; color: #1e293b;">FOUNDER & ADMIN</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Section -->
+        <section id="login" class="section-hide max-w-sm mx-auto py-10">
+            <div class="premium-card p-10">
+                <h2 class="text-2xl font-black mb-8 text-center italic uppercase">Member Login</h2>
+                <form id="loginForm" class="space-y-4">
+                    <input type="text" id="logPhone" placeholder="মোবাইল নম্বর" class="w-full p-4 bg-slate-50 rounded-2xl border font-bold outline-none" required>
+                    <input type="password" id="logPass" placeholder="পাসওয়ার্ড" class="w-full p-4 bg-slate-50 rounded-2xl border font-bold outline-none" required>
+                    <button type="submit" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase hover:bg-emerald-600 transition-all">Login Now</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Payment Section -->
         <section id="payment" class="section-hide max-w-md mx-auto">
             <div class="premium-card p-10">
                 <h3 class="text-xl font-black mb-8 italic uppercase text-center">মাসিক চাঁদা প্রদান</h3>
-                <!-- Monthly Payment Numbers Display -->
                 <div class="pay-numbers bg-slate-900 text-emerald-400 p-6 rounded-3xl mb-8 space-y-2 text-[11px] font-bold text-center border-b-4 border-emerald-600"></div>
-                
                 <form id="payForm" class="space-y-4">
                     <select id="pMethod" class="w-full p-4 bg-slate-50 rounded-2xl border font-bold" required>
                         <option value="">Select Method</option><option value="Bkash">Bkash</option><option value="Nagad">Nagad</option>
@@ -169,33 +248,10 @@
             <div id="histList" class="space-y-4"></div>
         </section>
 
-        <!-- ULTRA PREMIUM CERTIFICATE TEMPLATE -->
-        <div id="certificateTemplate">
-            <div class="cert-outer-border">
-                <div class="cert-inner-border">
-                    <h1 style="font-size: 65px; color: #064e3b; font-weight: 900;">BSKF FOUNDATION</h1>
-                    <p style="font-size: 22px; color: #b45309; letter-spacing: 8px; margin-bottom: 40px;">CERTIFICATE OF MEMBERSHIP</p>
-                    <div class="cert-member-name" id="certName">MEMBER NAME</div>
-                    <p id="certID" style="font-weight: 800; color: #064e3b; font-size: 18px;">ID: BSKF-0000</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Login Section -->
-        <section id="login" class="section-hide max-w-sm mx-auto py-10">
-            <div class="premium-card p-10">
-                <h2 class="text-2xl font-black mb-8 text-center italic uppercase">Member Login</h2>
-                <form id="loginForm" class="space-y-4">
-                    <input type="text" id="logPhone" placeholder="মোবাইল নম্বর" class="w-full p-4 bg-slate-50 rounded-2xl border font-bold outline-none" required>
-                    <input type="password" id="logPass" placeholder="পাসওয়ার্ড" class="w-full p-4 bg-slate-50 rounded-2xl border font-bold outline-none" required>
-                    <button type="submit" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase hover:bg-emerald-600 transition-all">Login Now</button>
-                </form>
-            </div>
-        </section>
-
     </main>
 
     <script>
+        // Firebase Config
         const firebaseConfig = {
           apiKey: "AIzaSyDeFrZUu2ZwWzFa7owaC0v6WO_zP2lEJ1Q",
           authDomain: "firstdevloping.firebaseapp.com",
@@ -234,8 +290,18 @@
         function updateDashboardUI() {
             document.getElementById('dashName').innerText = activeUser.name;
             document.getElementById('dashID').innerText = 'ID: BSKF-' + activeUser.id;
+            
+            // Map data to Certificate
             document.getElementById('certName').innerText = activeUser.name;
-            document.getElementById('certID').innerText = 'ID: BSKF-' + activeUser.id;
+            document.getElementById('certFather').innerText = activeUser.fatherName;
+            document.getElementById('certMother').innerText = activeUser.motherName;
+            document.getElementById('certNID').innerText = activeUser.nid;
+            document.getElementById('certVillage').innerText = activeUser.village;
+            document.getElementById('certThana').innerText = activeUser.thana;
+            document.getElementById('certDistrict').innerText = activeUser.district;
+            document.getElementById('certWard').innerText = activeUser.ward;
+            document.getElementById('certID').innerText = 'BSKF-' + activeUser.id;
+
             document.getElementById('guestLinks').classList.add('hidden');
             document.getElementById('userLinks').classList.remove('hidden');
 
@@ -282,10 +348,16 @@
         }
 
         async function downloadCertificate() {
-            const btn = document.getElementById('downloadBtn'); btn.innerText = 'Processing...';
-            html2canvas(document.getElementById('certificateTemplate'), { scale: 2 }).then(canvas => {
-                const link = document.createElement('a'); link.download = `BSKF_Cert_${activeUser.name}.png`; link.href = canvas.toDataURL(); link.click();
-                btn.innerHTML = '<i data-lucide="award"></i> Get High-Quality Certificate'; lucide.createIcons();
+            const btn = document.getElementById('downloadBtn'); btn.innerText = 'Generating Certificate...';
+            const template = document.getElementById('certificateTemplate');
+            
+            html2canvas(template, { scale: 2, useCORS: true }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `BSKF_Certificate_${activeUser.name}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                btn.innerHTML = '<i data-lucide="award"></i> Get Membership Certificate';
+                lucide.createIcons();
             });
         }
 
@@ -295,23 +367,38 @@
             const trx = document.getElementById('regTrx').value;
             try {
                 await auth.createUserWithEmailAndPassword(phone + "@bskf.com", document.getElementById('regPass').value);
-                const memberInfo = { name: document.getElementById('regName').value, phone, nid: document.getElementById('regNID').value, id: Math.floor(1000 + Math.random() * 9000), status: 'pending', role: 'member', reg_trx: trx };
+                const memberInfo = { 
+                    name: document.getElementById('regName').value, 
+                    fatherName: document.getElementById('regFather').value,
+                    motherName: document.getElementById('regMother').value,
+                    nid: document.getElementById('regNID').value,
+                    village: document.getElementById('regVillage').value,
+                    thana: document.getElementById('regThana').value,
+                    district: document.getElementById('regDistrict').value,
+                    ward: document.getElementById('regWard').value,
+                    phone: phone, 
+                    id: Math.floor(1000 + Math.random() * 9000), 
+                    status: 'pending', 
+                    role: 'member', 
+                    reg_trx: trx 
+                };
                 await db.collection("members").doc(phone).set(memberInfo);
                 await db.collection("payments").add({ phone, name: memberInfo.name, amount: 200, trxId: trx, method: document.getElementById('regMethod').value, from: document.getElementById('regSender').value, status: 'pending', type: 'registration', timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-                alert("নিবন্ধন আবেদন জমা হয়েছে!"); showSection('dashboard');
+                alert("নিবন্ধন আবেদন সফল হয়েছে! অ্যাডমিন ভেরিফিকেশনের জন্য অপেক্ষা করুন।");
+                showSection('dashboard');
             } catch (err) { alert(err.message); }
         };
 
         document.getElementById('loginForm').onsubmit = async (e) => {
             e.preventDefault();
             try { await auth.signInWithEmailAndPassword(document.getElementById('logPhone').value + "@bskf.com", document.getElementById('logPass').value); showSection('dashboard'); }
-            catch (err) { alert("ভুল তথ্য!"); }
+            catch (err) { alert("ভুল তথ্য অথবা একাউন্ট নেই!"); }
         };
 
         document.getElementById('payForm').onsubmit = async (e) => {
             e.preventDefault();
             await db.collection("payments").add({ phone: activeUser.phone, name: activeUser.name, method: document.getElementById('pMethod').value, amount: parseFloat(document.getElementById('pAmt').value), trxId: document.getElementById('pTrx').value, from: document.getElementById('pFrom').value, status: 'pending', type: 'monthly', timestamp: firebase.firestore.FieldValue.serverTimestamp() });
-            alert("পেমেন্ট জমা হয়েছে!"); showSection('history'); e.target.reset();
+            alert("পেমেন্ট তথ্য জমা হয়েছে!"); showSection('history'); e.target.reset();
         };
 
         function loadPersonalHistory(phone) {
